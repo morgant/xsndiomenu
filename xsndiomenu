@@ -1,0 +1,96 @@
+#!/bin/sh
+
+_is_kern_audio_record_on() {
+  [ "$(sysctl -n kern.audio.record)" = "1" ]
+}
+
+_sndio_server_dev() {
+  printf "audio%d" "$(sndioctl -n server.device)"
+}
+
+_is_sndio_server_dev() {
+  [ "$1" = "$(_sndio_server_dev)" ]
+}
+
+_is_sndio_output_muted() {
+  [ "$(sndioctl -n output.mute)" = "1" ]
+}
+
+_sndio_output_level() {
+  _level="$(sndioctl -n output.level)"
+  printf "%.f" "$(echo "$_level * 100" | bc)"
+}
+
+_is_sndio_input_muted() {
+  [ "$(sndioctl -n input.mute)" = "1" ]
+
+}
+
+_sndio_input_level() {
+  _level="$(sndioctl -n input.level)"
+  printf "%.f" "$(echo "$_level * 100" | bc)"
+}
+
+_all_audio_devs() {
+  sndioctl -in server.device | tr ',' '\n' | while read -r _num ; do
+    printf "audio%d\n" "$_num"
+  done
+}
+
+_dev_for_audio_dev() {
+  dmesg | grep "^${1}" | sed -E "s/${1} at //"
+}
+
+_audio_dev_desc() {
+  _desc="$(dmesg | grep "^$(_dev_for_audio_dev "$1") at" | tail -n 1 | sed -E "s/^.*\"(.+)\".*$/\1/")"
+  [ -z "$_desc" ] && _desc="$1"
+  printf "%s" "$_desc"
+}
+
+_xmenu_sndio_devs() {
+  _all_audio_devs | while read -r _dev ; do
+    _desc="$(_audio_dev_desc "$_dev")"
+    _num="$(echo "$_dev" | sed -E "s/audio//")"
+    _is_sndio_server_dev "$_dev" && _server=" (SERVER)" || _server=""
+    printf "%s%s\tsndioctl -q server.device=%d\n" "$_desc" "$_server" "$_num"
+  done
+}
+
+_xmenu_sndio_output_toggle_mute() {
+  _is_sndio_output_muted \
+    && printf "Unmute\tsndioctl -q output.mute=0\n" \
+    || printf "Mute\tsndioctl -q output.mute=1\n"
+}
+
+_xmenu_sndio_input_toggle_mute() {
+  _is_sndio_input_muted \
+    && printf "Unmute\tsndioctl -q input.mute=0\n" \
+    || printf "Mute\tsndioctl -q input.mute=1\n"
+}
+
+_xmenu_sndio_output_vol() {
+  printf "Output: %.0f%%\ttrue\n" "$(_sndio_output_level)"
+  printf "\tMax\tsndioctl -q output.level=1\n"
+  printf "\t+10%%\tsndioctl -q output.level=+0.1\n"
+  printf "\t-10%%\tsndioctl -q output.level=-0.1\n"
+  printf "\tMin\tsndioctl -q output.level=0\n"
+}
+
+_xmenu_sndio_input_vol() {
+  _is_kern_audio_record_on && _record="ENABLED" || _record="DISABLED"
+  printf "Input: %.f%% (%s)\ttrue\n" "$(_sndio_input_level)" "$_record"
+  printf "\tMax\tsndioctl -q input.level=1\n"
+  printf "\t+10%%\tsndioctl -q input.level=+0.1\n"
+  printf "\t-10%%\tsndioctl -q input.level=-0.1\n"
+  printf "\tMin\tsndioctl -q input.level=0\n"
+}
+
+xmenu <<EOF | sh &
+$(_xmenu_sndio_devs)
+
+$(_xmenu_sndio_output_vol)
+$(_xmenu_sndio_output_toggle_mute)
+
+$(_xmenu_sndio_input_vol)
+$(_xmenu_sndio_input_toggle_mute)
+EOF
