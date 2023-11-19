@@ -116,7 +116,7 @@ _xmenu_sndio_input_vol() {
   printf "\tMin\tsndioctl -q input.level=0\n"
 }
 
-xmenu <<EOF | sh &
+xmenu <<EOF | sh
 $(_xmenu_sndio_devs)
 
 $(_xmenu_sndio_output_vol)
