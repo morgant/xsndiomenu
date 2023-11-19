@@ -1,0 +1,77 @@
+#!/bin/sh
+
+#
+# xsndioicon - X11 icon to open xsndiomenu
+#
+# CHANGE LOG:
+#
+# v0.1   - 2023-11-18 - Morgan Aldridge <morgant@makkintosshu.com>
+#                       Initial version.
+#
+# LICENSE:
+#
+# Copyright (c) 2023 Morgan Aldridge
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+_pid=""
+
+trap '[ -n "$_pid" ] && kill $_pid' EXIT
+
+_to_percent() {
+  printf "%.f" "$(echo "$1 * 100" | bc)"
+}
+
+_percent_to_icon() {
+  if [ "$1" -le 0 ] ; then
+    printf "none"
+  elif [ "$1" -le 50 ] ; then
+    printf "low"
+  else
+    printf "full"
+  fi
+}
+
+_show_icon() {
+  [ -n "$_pid" ] && kill "$_pid"
+  wmlaunchbutton "pixmap/sound_${1}.xpm" xsndiomenu &
+  _pid="$!"
+}
+
+sndioctl -m | while IFS="=" read -r _control _value; do
+  _value="$(IFS=" " echo "$_value" | cut -f 1)"
+  printf "_value=%s\n" "$_value"
+  case "$_control" in
+    output*.level)
+      printf "handling output.level=%s\n" "$_value"
+      _level="$(_to_percent "$_value")"
+      _show_icon "$(_percent_to_icon "$_level")"
+      ;;
+    output*.mute)
+      printf "handling output.mute=%s\n" "$_value"
+      if [ "$_value" -eq 1 ] ; then
+        _show_icon "mute"
+      else
+        _level="$(sndioctl -n output.level)"
+        _level="$(_to_percent "$_level")"
+        _show_icon "$(_percent_to_icon "$_level")"
+      fi
+      ;;
+  esac
+done

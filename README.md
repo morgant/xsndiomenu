@@ -28,4 +28,6 @@ A simple menu utility to view & control [sndio](https://sndio.org/) devices & st
 
 ## LICENSE
 
+Mark James' [FamFamFam Silk Icons](https://github.com/markjames/famfamfam-silk-icons) licensed under the [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/).
+
 Released under the [MIT license](LICENSE).
