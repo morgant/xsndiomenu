@@ -116,7 +116,18 @@ _xmenu_sndio_input_vol() {
   printf "\tMin\tsndioctl -q input.level=0\n"
 }
 
-xmenu <<EOF | sh
+_wmlaunchbutton_xmenu_position() {
+  _icon_geometry="$(printenv BUTTON_GEOMETRY)"
+  _icon_padding="$(printenv BUTTON_GEOMETRY_PADDING)"
+  _icon_padding="${_icon_padding:-0}"
+  [ -n "$_icon_geometry" ] && echo "$_icon_geometry" | while IFS=x+ read -r _w _h _x _y ; do
+    _top="$(( _y + _h + _icon_padding ))"
+    [ "$_x" -ge "$_icon_padding" ] && _left="$(( _x - _icon_padding ))" || _left="$_x"
+    printf "-p %sx%s" "$_left" "$_top"
+  done
+}
+
+xmenu $(_wmlaunchbutton_xmenu_position) <<EOF | sh
 $(_xmenu_sndio_devs)
 
 $(_xmenu_sndio_output_vol)
