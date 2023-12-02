@@ -7,6 +7,9 @@
 #
 # v0.1   - 2023-11-18 - Morgan Aldridge <morgant@makkintosshu.com>
 #                       Initial version.
+# v0.1.1 - 2023-12-01 - Morgan Aldridge
+#                       Fix for potential to parse incorrect dmesg line when
+#                       determining an audio device's hardware device.
 #
 # LICENSE:
 #
@@ -69,7 +72,7 @@ _all_audio_devs() {
 }
 
 _dev_for_audio_dev() {
-  dmesg | grep "^${1}" | sed -E "s/${1} at //"
+  dmesg | grep "^${1} at" | tail -n 1 | sed -E "s/${1} at //"
 }
 
 _audio_dev_desc() {
