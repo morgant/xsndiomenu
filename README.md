@@ -26,6 +26,12 @@ A simple menu utility to view & control [sndio](https://sndio.org/) devices & st
 
 `xsndiomenu`
 
+## SIMILAR UTILITIES
+
+You might want to check out these similar projects for controlling OpenBSD's sndiod(8) from X11:
+
+* [sndiokeys](https://github.com/ratchov/sndiokeys)
+
 ## LICENSE
 
 Released under the [MIT license](LICENSE).
