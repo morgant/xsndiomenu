@@ -18,6 +18,10 @@ A simple menu utility to view & control [sndio](https://sndio.org/) devices & st
         * Supports toggling mute
 * For input, denotes whether audio recording is enabled in the kernel
 
+### Example Screenshot
+
+![Screenshot of `xsndiomenu` showing three audio devices (the second being the active server), output level (100%) and mute option, and input level (100%; recording disabled in the kernel) and mute option](xsndiomenu.png)
+
 ## PREREQUISITES
 
 * [xmenu](https://github.com/phillbush/xmenu)
