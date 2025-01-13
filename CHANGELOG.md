@@ -9,15 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* `xsndioicon` ([#1](https://github.com/morgant/xsndiomenu/issues/1)):
+    * Monitors `sndioctl` for output level & mute status changes
+    * Relaunches `wmlaunchbutton` with appropriate speaker volume/mute icon upon changes
+
+### Changed
+
+* `Makefile`:
+    * `install`, `uninstall`, `install-mlvwmrc-menuextra`, `uninstall-mlvwmrc-menuextra` targets to install/uninstall `xsndioicon` & MenuExtra ([#1](https://github.com/morgant/xsndiomenu/issues/1))
+
+## [0.2.0] - 2024-01-13
+
+### Added
+
 * mlvwmrc Menu Extra:
-    * Provides an icon in the MLVWM menu bar which will show the `xsndiomenu` when clicked on
-* Makefile with `install`, `uninstall`, `install-mlvwmrc-menuextra`, `uninstall-mlvwmrc-menuextra` targets
+    * Provides an icon in the MLVWM menu bar which will show the `xsndiomenu` when clicked on ([#1](https://github.com/morgant/xsndiomenu/issues/1))
+* Makefile with `install`, `uninstall`, `install-mlvwmrc-menuextra`, `uninstall-mlvwmrc-menuextra` targets ([#1](https://github.com/morgant/xsndiomenu/issues/1))
 * Added this CHANGELOG
 
-### Changed:
+### Changed
 
-* Now requires `wmlaunchbutton`
-* Updated README to document the new mlvwmrc MenuExtra & installation
+* Now requires `wmlaunchbutton` ([#1](https://github.com/morgant/xsndiomenu/issues/1))
+* Updated README to document the new mlvwmrc MenuExtra & installation ([#1](https://github.com/morgant/xsndiomenu/issues/1))
 * Updated copyright years
 
 ## [0.1.1] - 2023-12-01
@@ -42,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             * Supports toggling mute
     * For input, denotes whether audio recording is enabled in the kernel
 
-[unreleased]: https://github.com/morgant/xsndiomenu/compare/0.1.1...main
+[unreleased]: https://github.com/morgant/xsndiomenu/compare/0.2...main
+[0.2.0]: https://github.com/morgant/xsndiomenu/compare/0.1.1...0.2
 [0.1.1]: https://github.com/morgant/xsndiomenu/compare/0.1...0.1.1
 [0.1.0]: https://github.com/morgant/xsndiomenu/releases/tag/0.1
