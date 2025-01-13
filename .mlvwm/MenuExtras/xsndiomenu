@@ -1,5 +1,5 @@
 ################################################################################
-# xsndioicon Menu Extra
+# xsndiomenu Menu Extra
 ################################################################################
 
-Swallow "wmlaunchbutton" Action Exec "xsndioicon" exec xsndioicon
+Swallow "wmlaunchbutton" Action Exec "wmlaunchbutton" exec wmlaunchbutton pixmap/sound_full.xpm xsndiomenu

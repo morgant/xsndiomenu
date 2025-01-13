@@ -5,6 +5,8 @@ by Morgan Aldridge <morgant@makkintosshu.com>
 
 A simple menu utility to view & control [sndio](https://sndio.org/) devices & state under [OpenBSD](https://www.openbsd.org/). It is a wrapper around OpenBSD's [dmesg(8)](http://man.openbsd.org/dmesg), [sndioctl(1)](http://man.openbsd.org/sndioctl), and [sysctl(8)](http://man.openbsd.org/man8/sysctl.8) powered by [xmenu](https://github.com/phillbush/xmenu).
 
+It is intended for, but not limited to, use with the [MLVWM](https://github.com/morgant/mlvwm) window manager, specifically the [mlvwmrc](https://github.com/morgant/mlvwmrc) configurations, as a "Menu Extra" swallowed into the menu bar.
+
 **NOTE:** _This is currently a standalone X11 application and does not integrate with the system tray._
 
 ## FEATURES
@@ -26,11 +28,36 @@ A simple menu utility to view & control [sndio](https://sndio.org/) devices & st
 
 ## PREREQUISITES
 
+* [wmlaunchbutton](https://github.com/phillbush/wmlaunchbutton)
 * [xmenu](https://github.com/phillbush/xmenu)
+
+## INSTALLATION
+
+```
+make install
+```
+
+### MLVWM Menu Extra
+
+Install the Menu Extra in your `~/.mlvwm/MenuExtras/` directory by running:
+
+```
+make install-mlvwmrc-menuextra
+```
+
+Next, edit your `~/.mlvwm/MenuBar` configuration file to add the following line in the appropriate "Menu Extras" section:
+
+```
+Read .mlvwm/MenuExtras/xsndiomenu
+```
+
+Finally, restart `mlvwm`.
 
 ## USAGE
 
-`xsndiomenu`
+You can manually execute `xsndiomenu` in any way you prefer, which will show the menu at your cursor.
+
+If installed as an MLVWM MenuExtra, you can click the icon in your menu bar.
 
 ## SIMILAR UTILITIES
 
