@@ -66,6 +66,10 @@ You might want to check out these similar projects for controlling OpenBSD's snd
 * [sndiokeys](https://github.com/ratchov/sndiokeys)
 * [tray-app](https://www.bsdua.org/tray-app.html) (specifically `/usr/local/libexec/tray-app/sound`; for use with a system tray application)
 
+## CHANGE LOG
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
+
 ## LICENSE
 
 Mark James' [FamFamFam Silk Icons](https://github.com/markjames/famfamfam-silk-icons) licensed under the [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/).
