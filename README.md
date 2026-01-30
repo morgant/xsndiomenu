@@ -66,6 +66,10 @@ You might want to check out these similar projects for controlling OpenBSD's snd
 * [sndiokeys](https://github.com/ratchov/sndiokeys)
 * [tray-app](https://www.bsdua.org/tray-app.html) (specifically `/usr/local/libexec/tray-app/sound`; for use with a system tray application)
 
+Or from a terminal:
+
+* [siosw](https://github.com/vext01/siosw)
+
 ## CHANGE LOG
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed version history.

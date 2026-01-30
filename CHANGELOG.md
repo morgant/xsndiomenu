@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `xsndioicon` ([#1](https://github.com/morgant/xsndiomenu/issues/1)):
     * Monitors `sndioctl` for output level & mute status changes
     * Relaunches `wmlaunchbutton` with appropriate speaker volume/mute icon upon changes
+* Updated README to link to [siosw](https://github.com/vext01/siosw) TUI utility
 
 ### Changed
 
